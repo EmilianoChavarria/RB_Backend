@@ -30,11 +30,11 @@ Este proyecto es el **backend** (API REST) de un sistema que permite a los usuar
 
 ```bash
 src/
-├── controllers/       # Lógica de endpoints (ej: authController.js)
-├── routes/            # Rutas definidas (ej: auth.routes.js)
-├── services/          # Lógica de negocio (ej: pdfService.js, emailService.js)
-├── utils/             # Helpers y utilidades (ej: generatePDF.js)
-├── config/            # Configuraciones (DB, cloud storage, etc.)
-└── app.js             # Punto de entrada del servidor
+├── controllers/       
+├── routes/            
+├── services/          
+├── utils/             
+├── config/            
+└── app.js             
 assets/
 README.md
