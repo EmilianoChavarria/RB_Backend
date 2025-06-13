@@ -18,7 +18,8 @@ Este proyecto es el **backend** (API REST) de un sistema que permite a los usuar
 |----------------------|---------------------------------------------------------------------------------|  
 | **Lenguaje**         | Node.js (JavaScript/TypeScript)                                                 |  
 | **Framework**        | Express.js                                                                      |  
-| **Base de Datos**    | MySQL                                                                          |  
+| **Base de Datos**    | MySQL                                                                          |
+| **Query Builder**         | Knex.js                                                                   |
 | **Autenticación**    | JWT + Bcrypt                                                                   |  
 | **Envío de Emails**  | Nodemailer                                                                     |  
 | **WhatsApp**         | Twilio API                                                                      |  
