@@ -23,7 +23,7 @@ const createUser = async (userData) => {
         email,
         password: hashedPassword,
         role,
-        status: 1
+        status: true
     };
 
     return await db('user').insert(newUser);
@@ -38,10 +38,22 @@ const updateUser = async (id_user, userData) => {
         .update(userData);
 };
 
+const deleteUser = async (id_user) => {
+
+    const user = await db('user').where({ id_user }).first();
+    if (!user) throw new Error('Usuario no encontrado');
+
+    return await db('user')
+        .where({ id_user })
+        .update({ status: false });
+};
+
+
 
 
 module.exports = {
     getAll,
     createUser,
-    updateUser
+    updateUser,
+    deleteUser
 };

@@ -13,6 +13,8 @@ const validate = (schema) => (req, res, next) => {
 router.get('/', userController.getAllUsers);
 router.post('/', validate(userSchema), userController.createUser);
 router.put('/:id', validate(updateUserSchema), userController.updateUser);
+router.delete('/:id', userController.deleteUser);
+
 
 
 module.exports = router;
