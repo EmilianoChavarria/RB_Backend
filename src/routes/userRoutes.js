@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
-const { userSchema } = require('../validators/userValidator');
+const { userSchema, updateUserSchema  } = require('../validators/userValidator');
 
 //se define el middleware de validación
 const validate = (schema) => (req, res, next) => {
@@ -12,5 +12,7 @@ const validate = (schema) => (req, res, next) => {
 
 router.get('/', userController.getAllUsers);
 router.post('/', validate(userSchema), userController.createUser);
+router.put('/:id', validate(updateUserSchema), userController.updateUser);
+
 
 module.exports = router;

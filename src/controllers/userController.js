@@ -18,3 +18,13 @@ exports.createUser = async (req, res) => {
         res.status(500).json({ message: 'Error al crear usuario', error: err.message });
     }
 };
+
+exports.updateUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await userService.updateUser(id, req.body);
+        res.json({ message: 'Usuario actualizado correctamente', error: false });
+    } catch (err) {
+        res.status(500).json({ message: 'Error al actualizar usuario', error: err.message });
+    }
+};
