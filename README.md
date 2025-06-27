@@ -39,3 +39,8 @@ src/
 └── app.js             
 assets/
 README.md
+```
+
+## Para correr el proyecto
+```bash
+npm run dev
