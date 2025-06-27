@@ -21,9 +21,6 @@ const userSchema = Joi.object({
         'any.only': 'El rol debe ser admin o user',
         'string.empty': 'El rol es obligatorio'
     }),
-    // status: Joi.boolean().required().messages({
-    //     'boolean.base': 'El status debe ser verdadero o falso'
-    // })
 });
 
 const updateUserSchema = Joi.object({
