@@ -6,7 +6,7 @@ const { userSchema, updateUserSchema  } = require('../validators/userValidator')
 //se define el middleware de validación
 const validate = (schema) => (req, res, next) => {
   const { error } = schema.validate(req.body);
-  if (error) return res.status(400).json({ error: error.details[0].message });
+  if (error) return res.status(400).json({ error: error.details[0].message, success:false });
   next();
 };
 
