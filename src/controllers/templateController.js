@@ -11,13 +11,23 @@ exports.getAllTemplates = async (req, res) => {
 
 exports.getTemplateById = async (req, res) => {
   try {
-    const template = await templateService.getTemplateImage(req.params.id);
-    if (!template) {
-      return res.status(404).json({ success: false, error: 'Template not found' });
-    }
+    const result = await templateService.getTemplateImage(req.params.id);
     
-    res.set('Content-Type', template.mime_type);
-    res.send(template.image);
+    if (!result) {
+      return res.status(404).json({ 
+        success: false, 
+        error: 'Template not found' 
+      });
+    }
+
+    res.status(200).json({ 
+      success: true, 
+      data: {
+        template_name: result.template_name,
+        image: result.image,
+        mime_type: result.mime_type
+      }
+    });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
