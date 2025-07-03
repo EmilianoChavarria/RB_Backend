@@ -1,11 +1,11 @@
 const Joi = require('joi');
 
 const userSchema = Joi.object({
-    nombre: Joi.string().min(3).max(50).required().messages({
+    nombres: Joi.string().min(3).max(50).required().messages({
         'string.empty': 'El nombre es obligatorio',
         'string.min': 'El nombre debe tener al menos 3 caracteres'
     }),
-    apellido: Joi.string().min(3).max(50).required().messages({
+    apellidos: Joi.string().min(3).max(50).required().messages({
         'string.empty': 'El apellido es obligatorio',
         'string.min': 'El apellido debe tener al menos 3 caracteres'
     }),
