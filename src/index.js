@@ -4,6 +4,7 @@ const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes')
 const templateRoutes = require('./routes/templateRoutes');
+const invitationRoutes = require('./routes/invitationRoutes')
 const verifyToken = require('./middlewares/verifyToken')
 const verifyRole = require('./middlewares/verifyRole')
 const bodyParser = require('body-parser');
@@ -27,6 +28,7 @@ app.use(bodyParser.urlencoded({
 // Rutas
 app.use('/api/usuarios', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/invitation',invitationRoutes)
 
 // Endpoint de prueba general con autenticación
 app.get('/api/prueba', verifyToken, (req, res) => {
