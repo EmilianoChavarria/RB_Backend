@@ -29,5 +29,6 @@ const guestsArraySchema = Joi.object({
 });
 
 module.exports = {
+  guestSchema,
   guestsArraySchema
 };

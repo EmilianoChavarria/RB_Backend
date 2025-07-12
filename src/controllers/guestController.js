@@ -10,6 +10,16 @@ exports.createGuests = async (req, res) => {
   }
 };
 
+exports.updateGuest = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await guestService.updateGuest(id, req.body);
+    res.json({ message: 'Invitado actualizado correctamente', error: false });
+  } catch (err) {
+    res.status(500).json({ message: err.message, error: true });
+  }
+};
+
 exports.getGuests = async (req, res) => {
   try {
     const { invitationId } = req.params;
