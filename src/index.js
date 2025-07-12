@@ -5,6 +5,7 @@ const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes')
 const templateRoutes = require('./routes/templateRoutes');
 const invitationRoutes = require('./routes/invitationRoutes')
+const guestRoutes = require('./routes/guestRoutes')
 const verifyToken = require('./middlewares/verifyToken')
 const verifyRole = require('./middlewares/verifyRole')
 const bodyParser = require('body-parser');
@@ -26,9 +27,10 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Rutas
-app.use('/api/usuarios', userRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/invitation',invitationRoutes)
+app.use('/api/guest',guestRoutes)
 
 // Endpoint de prueba general con autenticación
 app.get('/api/prueba', verifyToken, (req, res) => {
