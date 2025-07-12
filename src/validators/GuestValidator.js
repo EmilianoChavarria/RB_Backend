@@ -9,7 +9,7 @@ const guestSchema = Joi.object({
         'string.empty': 'El primer apellido es obligatorio',
         'string.min': 'El primer apellido debe tener al menos 3 caracteres'
     }),
-  surname: Joi.string().min(2).max(45).messages({
+  surname: Joi.string().min(2).max(45).required().messages({
         'string.empty': 'El segundo apellido es obligatorio',
         'string.min': 'El nombre debe tener al menos 3 caracteres'
     }),
