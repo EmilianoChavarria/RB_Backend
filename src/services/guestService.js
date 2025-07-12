@@ -1,10 +1,10 @@
 const db = require('../database/dbConnection');
+const emailService = require('./emailService');
 
 const createGuests = async (guestsArray, invitationId) => {
   return await db.transaction(async trx => {
     const emails = guestsArray.map(g => g.email?.toLowerCase());
 
-    // Guest unico por email
     const existingGuests = await trx('guest')
       .where('invitation_id_invitation', invitationId)
       .whereIn('email', emails.filter(e => e))
@@ -22,9 +22,21 @@ const createGuests = async (guestsArray, invitationId) => {
       status: true
     }));
 
-    return await trx('guest').insert(guestsWithInvitation);
+    // Insertar los guests
+    const insertResult = await trx('guest').insert(guestsWithInvitation);
+
+    // Obtener los nuevos IDs (último ID insertado + número de insertados)
+    const firstId = insertResult[0]; // insert devuelve el primer ID insertado
+    for (let i = 0; i < guestsWithInvitation.length; i++) {
+      const guestId = firstId + i;
+      await emailService.sendInvitation(guestId, trx);
+    }
+
+    return { success: true };
   });
 };
+
+
 
 const getGuestsByInvitation = async (invitationId) => {
   return await db('guest')
