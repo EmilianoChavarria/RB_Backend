@@ -5,6 +5,7 @@ const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes')
 const templateRoutes = require('./routes/templateRoutes');
 const invitationRoutes = require('./routes/invitationRoutes')
+const confirmInvitationRoutes = require('./routes/ConfirmInvitationRoutes')
 const guestRoutes = require('./routes/guestRoutes')
 const verifyToken = require('./middlewares/verifyToken')
 const verifyRole = require('./middlewares/verifyRole')
@@ -31,7 +32,8 @@ app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/invitation',invitationRoutes)
 app.use('/api/guest',guestRoutes)
-
+app.use('/api/templates', templateRoutes);
+app.use('/api/confirm-invitation', confirmInvitationRoutes);
 // Endpoint de prueba general con autenticación
 app.get('/api/prueba', verifyToken, (req, res) => {
     res.json({
@@ -48,8 +50,6 @@ app.get('/api/prueba/userRole', verifyToken, verifyRole('admin'), (req, res) => 
         payload: req.user
     });
 });
-
-app.use('/templates', templateRoutes);
 
 // Manejo de errores
 app.use((err, req, res, next) => {
