@@ -7,6 +7,7 @@ const templateRoutes = require('./routes/templateRoutes');
 const invitationRoutes = require('./routes/invitationRoutes')
 const confirmInvitationRoutes = require('./routes/ConfirmInvitationRoutes')
 const guestRoutes = require('./routes/guestRoutes')
+const passwordRecoveryRoutes = require('./routes/passwordRecoveryRoutes')
 const verifyToken = require('./middlewares/verifyToken')
 const verifyRole = require('./middlewares/verifyRole')
 const bodyParser = require('body-parser');
@@ -34,6 +35,7 @@ app.use('/api/invitation',invitationRoutes)
 app.use('/api/guest',guestRoutes)
 app.use('/api/templates', templateRoutes);
 app.use('/api/confirm-invitation', confirmInvitationRoutes);
+app.use('/api/passwordRecovery',passwordRecoveryRoutes)
 // Endpoint de prueba general con autenticación
 app.get('/api/prueba', verifyToken, (req, res) => {
     res.json({
