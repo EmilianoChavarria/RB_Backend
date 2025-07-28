@@ -216,4 +216,27 @@ El equipo organizador`;
     }
 }
 
-module.exports = new EmailService();
+const sendRecoveryEmail = async (to, token) => {
+    const transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST,     // smtp.sendgrid.net
+        port: process.env.SMTP_PORT,     // 587
+        auth: {
+            user: process.env.SMTP_USER, // "apikey"
+            pass: process.env.SMTP_PASS, // Tu API key de SendGrid
+        }
+    });
+
+    const url = `${process.env.FRONTEND_URL}/reset-password/${token}`;
+    await transporter.sendMail({
+        from: `"${process.env.EMAIL_FROM_NAME}" <${process.env.EMAIL_FROM}>`,
+        to,
+        subject: "Recuperación de contraseña",
+        html: `<p>Haz clic <a href="${url}">aquí</a> para restablecer tu contraseña.</p>`
+    });
+};
+
+module.exports = {
+    emailService: new EmailService(),
+    sendRecoveryEmail
+};
+
