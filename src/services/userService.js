@@ -48,18 +48,20 @@ const deleteUser = async (id_user) => {
         .update({ status: false });
 };
 
-const findOne  = async (id)=>{
-    if (!Number.isInteger(id)) {
+const findOne  = async (id) => {
+    const numericId = Number(id);
+
+    if (!Number.isInteger(numericId)) {
         throw new Error('tipo de dato esperado incorrecto');
     }
 
-    const user = await db('user').where({id_user: id})
-    if (!user){
-        throw  new Error('Usuario no encontrado')
+    const user = await db('user').where({ id_user: numericId }).first();
+
+    if (!user) {
+        throw new Error('Usuario no encontrado');
     }
 
-    return user
-
+    return user;
 }
 
 
