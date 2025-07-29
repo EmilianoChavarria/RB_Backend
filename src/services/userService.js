@@ -48,6 +48,20 @@ const deleteUser = async (id_user) => {
         .update({ status: false });
 };
 
+const findOne  = async (id)=>{
+    if (!Number.isInteger(id)) {
+        throw new Error('tipo de dato esperado incorrecto');
+    }
+
+    const user = await db('user').where({id_user: id})
+    if (!user){
+        throw  new Error('Usuario no encontrado')
+    }
+
+    return user
+
+}
+
 
 
 
@@ -55,5 +69,6 @@ module.exports = {
     getAll,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    findOne
 };
