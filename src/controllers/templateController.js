@@ -3,20 +3,49 @@ const templateService = require('../services/templateService');
 exports.getAllTemplates = async (req, res) => {
   try {
     const templates = await templateService.getAllTemplates();
-    res.json({ success: true, data: templates });
+    res.json({ 
+      success: true, 
+      data: templates 
+    });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
   }
 };
 
 exports.getTemplateById = async (req, res) => {
+  try {
+    const template = await templateService.getTemplateById(req.params.id);
+    
+    if (!template) {
+      return res.status(404).json({ 
+        success: false, 
+        error: 'Plantilla no encontrada' 
+      });
+    }
+
+    res.status(200).json({ 
+      success: true, 
+      data: template
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
+  }
+};
+
+exports.getTemplateImage = async (req, res) => {
   try {
     const result = await templateService.getTemplateImage(req.params.id);
     
     if (!result) {
       return res.status(404).json({ 
         success: false, 
-        error: 'Template not found' 
+        error: 'Plantilla no encontrada' 
       });
     }
 
@@ -29,16 +58,26 @@ exports.getTemplateById = async (req, res) => {
       }
     });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
   }
 };
 
 exports.createTemplate = async (req, res) => {
   try {
     const newTemplate = await templateService.createTemplate(req.body);
-    res.status(201).json({ success: true, data: newTemplate[0] });
+    res.status(201).json({ 
+      success: true, 
+      data: newTemplate[0] 
+    });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    const statusCode = error.message.includes('not found') ? 404 : 500;
+    res.status(statusCode).json({ 
+      success: false, 
+      error: error.message 
+    });
   }
 };
 
@@ -50,12 +89,22 @@ exports.updateTemplate = async (req, res) => {
     );
     
     if (!updatedTemplate.length) {
-      return res.status(404).json({ success: false, error: 'Template not found' });
+      return res.status(404).json({ 
+        success: false, 
+        error: 'Plantilla no encontrada' 
+      });
     }
     
-    res.json({ success: true, data: updatedTemplate[0] });
+    res.json({ 
+      success: true, 
+      data: updatedTemplate[0] 
+    });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    const statusCode = error.message.includes('not found') ? 404 : 500;
+    res.status(statusCode).json({ 
+      success: false, 
+      error: error.message 
+    });
   }
 };
 
@@ -63,10 +112,19 @@ exports.deleteTemplate = async (req, res) => {
   try {
     const deleted = await templateService.deleteTemplate(req.params.id);
     if (!deleted) {
-      return res.status(404).json({ success: false, error: 'Template not found' });
+      return res.status(404).json({ 
+        success: false, 
+        error: 'Plantilla no encontrada' 
+      });
     }
-    res.json({ success: true, message: 'Template deleted successfully' });
+    res.json({ 
+      success: true, 
+      message: 'Plantilla eliminada correctamente' 
+    });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
   }
 };
