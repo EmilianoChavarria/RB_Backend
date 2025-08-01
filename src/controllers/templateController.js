@@ -153,3 +153,34 @@ exports.getTemplateUsageStats = async (req, res) => {
     });
   }
 };
+
+exports.getTemplatesCreatedByMonth = async (req, res) => {
+  try {
+    const { year } = req.query;
+    const stats = await templateService.getTemplatesCreatedByMonth(year);
+    
+    // array de meses
+    const monthNames = ["Enero", "Febrero", "Marzo", "Abrril", "Mayo", "Junio", 
+                       "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+    // datos en formato para chart.js
+    const formattedData = {
+      labels: stats.map(item => `${monthNames[item.month - 1]} ${item.year}`),
+      datasets: [{
+        label: 'Listado de plantillas creadas por mes',
+        data: stats.map(item => item.count),
+      }],
+      rawData: stats
+    };
+
+    res.json({ 
+      success: true, 
+      data: formattedData 
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
+  }
+};

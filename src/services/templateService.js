@@ -147,6 +147,23 @@ const getTemplateUsageByEventType = async () => {
         .orderBy('template_count', 'desc');
 };
 
+const getTemplatesCreatedByMonth = async (year = null) => {
+    let query = db('templates')
+      .select(
+        db.raw('YEAR(created_at) as year'),
+        db.raw('MONTH(created_at) as month'),
+        db.raw('COUNT(id_templates) as count')
+      )
+      .groupByRaw('YEAR(created_at), MONTH(created_at)')
+      .orderByRaw('YEAR(created_at), MONTH(created_at)');
+  
+    if (year) {
+      query = query.whereRaw('YEAR(created_at) = ?', [year]);
+    }
+  
+    return await query;
+  };
+
 module.exports = {
     getAllTemplates,
     getTemplateById,
@@ -154,5 +171,6 @@ module.exports = {
     createTemplate,
     updateTemplate,
     deleteTemplate,
-    getTemplateUsageByEventType
+    getTemplateUsageByEventType,
+    getTemplatesCreatedByMonth
 };

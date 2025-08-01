@@ -54,6 +54,7 @@ router.put(
 
 router.delete('/:id', templateController.deleteTemplate);
 router.get('/templates-stats', templateController.getTemplateUsageStats);
+router.get('/created-by-month', templateController.getTemplatesCreatedByMonth);
 
 
 module.exports = router;
