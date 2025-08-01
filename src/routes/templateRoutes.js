@@ -53,5 +53,7 @@ router.put(
 );
 
 router.delete('/:id', templateController.deleteTemplate);
+router.get('/templates-stats', templateController.getTemplateUsageStats);
+
 
 module.exports = router;

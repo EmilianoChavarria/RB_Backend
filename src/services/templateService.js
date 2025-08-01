@@ -89,16 +89,16 @@ const createTemplate = async (templateData) => {
     const eventType = await db('event_type')
         .where({ id_event_type: rest.id_event_type, status: true })
         .first();
-    
+
     if (!eventType) {
         throw new Error('Tipo de evento no encontrado o inactivo');
     }
 
     return await db('templates')
-        .insert({ 
-            ...rest, 
-            image: processed.buffer, 
-            mime_type: processed.mime_type 
+        .insert({
+            ...rest,
+            image: processed.buffer,
+            mime_type: processed.mime_type
         })
         .returning(['id_templates', 'template_name', 'mime_type', 'status', 'id_event_type']);
 };
@@ -116,7 +116,7 @@ const updateTemplate = async (id, templateData) => {
         const eventType = await db('event_type')
             .where({ id_event_type: updateData.id_event_type, status: true })
             .first();
-        
+
         if (!eventType) {
             throw new Error('Tipo de evento no encontrado o inactivo');
         }
@@ -134,11 +134,25 @@ const deleteTemplate = async (id) => {
         .del();
 };
 
+const getTemplateUsageByEventType = async () => {
+    return await db('templates')
+        .select(
+            'event_type.id_event_type',
+            'event_type.name as event_type_name',
+            db.raw('COUNT(templates.id_templates) as template_count')
+        )
+        .leftJoin('event_type', 'templates.id_event_type', 'event_type.id_event_type')
+        .where('templates.status', 1)
+        .groupBy('event_type.id_event_type', 'event_type.name')
+        .orderBy('template_count', 'desc');
+};
+
 module.exports = {
     getAllTemplates,
     getTemplateById,
     getTemplateImage,
     createTemplate,
     updateTemplate,
-    deleteTemplate
+    deleteTemplate,
+    getTemplateUsageByEventType
 };
