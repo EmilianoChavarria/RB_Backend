@@ -19,7 +19,12 @@ const templateSchema = Joi.object({
   status: Joi.number().integer().valid(0, 1).default(1).messages({
     'number.base': 'El estado debe ser un número',
     'any.only': 'El estado debe ser 0 (inactivo) o 1 (activo)'
+  }),
+  id_event_type: Joi.number().integer().required().messages({
+    'number.base': 'El ID del tipo de evento debe ser un número entero',
+    'any.required': 'El ID del tipo de evento es requerido'
   })
+
 });
 
 const updateTemplateSchema = Joi.object({

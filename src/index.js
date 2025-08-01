@@ -5,6 +5,7 @@ const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes')
 const templateRoutes = require('./routes/templateRoutes');
 const invitationRoutes = require('./routes/invitationRoutes')
+const eventTypeRoutes = require('./routes/eventTypeRoutes')
 const confirmInvitationRoutes = require('./routes/ConfirmInvitationRoutes')
 const guestRoutes = require('./routes/guestRoutes')
 const passwordRecoveryRoutes = require('./routes/passwordRecoveryRoutes')
@@ -31,11 +32,12 @@ app.use(bodyParser.urlencoded({
 // Rutas
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/api/invitation',invitationRoutes)
-app.use('/api/guest',guestRoutes)
+app.use('/api/invitation', invitationRoutes)
+app.use('/api/eventType', eventTypeRoutes)
+app.use('/api/guest', guestRoutes)
 app.use('/api/templates', templateRoutes);
 app.use('/api/confirm-invitation', confirmInvitationRoutes);
-app.use('/api/passwordRecovery',passwordRecoveryRoutes)
+app.use('/api/passwordRecovery', passwordRecoveryRoutes)
 // Endpoint de prueba general con autenticación
 app.get('/api/prueba', verifyToken, (req, res) => {
     res.json({
