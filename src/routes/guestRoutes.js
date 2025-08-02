@@ -13,5 +13,6 @@ router.post('/', validate(guestsArraySchema), guestController.createGuests);
 router.put('/:id', validate(guestSchema), guestController.updateGuest);
 router.get('/:invitationId', guestController.getGuests);
 router.patch('/toggle/:id', guestController.toggleGuest);
+router.get('/findByEvent/:id_event',guestController.findGuestsByEvent)
 
 module.exports = router;

@@ -36,9 +36,6 @@ const createGuests = async (guestsArray, invitationId) => {
   });
 };
 
-
-
-
 const getGuestsByInvitation = async (invitationId) => {
   return await db('guest')
     .where({ 
@@ -82,9 +79,34 @@ const updateGuest = async (guestId, guestData) => {
     .update(guestData);
 };
 
+const findGuestsByEvent = async (idEvent) => {
+
+  if (typeof idEvent !== 'number' || isNaN(idEvent)) {
+    throw new Error('El idEvent debe ser un número válido');
+  }
+
+  // Validar que sea un entero positivo
+  if (!Number.isInteger(idEvent) || idEvent <= 0) {
+    throw new Error('El idEvent debe ser un entero positivo');
+  }
+
+
+  const event = await db('invitation').where({id_invitation: idEvent}).first();
+    if (!event){
+      throw new Error('El envento no existe');
+    }
+  const guests = await db('guest').where({invitation_id_invitation:idEvent});
+  if (guests.length<1){
+    throw new Error('No hay invitados asignados a este evento');
+  }
+
+  return guests;
+};
+
 module.exports = {
   createGuests,
   getGuestsByInvitation,
   toggleGuestStatus,
-  updateGuest
+  updateGuest,
+   findGuestsByEvent
 };
