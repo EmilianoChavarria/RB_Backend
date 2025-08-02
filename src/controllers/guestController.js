@@ -39,3 +39,22 @@ exports.toggleGuest = async (req, res) => {
     res.status(500).json({ message: 'Error al actualizar invitado', error: err.message });
   }
 };
+
+exports.findGuestsByEvent = async  (req, res) =>{
+  try {
+
+    const data = await  guestService.findGuestsByEvent(req.params.id_event);
+
+    return res.status(200).json({
+      success:true,
+      data:data
+    })
+
+  }catch (e){
+    return res.status(400).json({
+      success:false,
+      message : 'error al consultar los iinvitados del evento',
+      error: e.message
+    })
+  }
+}
