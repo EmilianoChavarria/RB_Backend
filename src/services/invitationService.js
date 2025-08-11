@@ -1,5 +1,8 @@
 const db = require('../database/dbConnection');
 
+const getAll = async () => {
+    return await db('invitation').select('*');
+};
 
 const save = async (invitationData) => {
 
@@ -24,6 +27,11 @@ const save = async (invitationData) => {
     const savedInvitation = await db('invitation').where({ id_invitation: id }).first();
 
     return savedInvitation;
+};
+
+const getAllCount = async () => {
+    const count = await db('invitation').count('id_invitation as total').first();
+    return count.total;
 };
 
 const update = async (invitationData, id) => {
@@ -113,4 +121,4 @@ const deleteInvitation = async (id) => {
 };
 
 
-module.exports = { save, findById, update, findByUser,deleteInvitation };
+module.exports = { getAll, save, findById, update, findByUser,deleteInvitation, getAllCount };

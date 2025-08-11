@@ -9,7 +9,9 @@ const validate = (schema) =>(req, res, next) =>{
     next();
 }
 
+router.get('/', invitationController.getAll)
 router.post('/',validate(invitationSchema), invitationController.save)
+router.get('/invitationCount', invitationController.getAllCount)
 router.get('/findByUser/:id',invitationController.findByUser)
 router.put('/:id', validate(invitationSchema),invitationController.update)
 router.get('/:id',invitationController.findById)

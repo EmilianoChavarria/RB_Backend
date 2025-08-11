@@ -1,5 +1,20 @@
 const invitationService = require('../services/invitationService')
 
+exports.getAll = async (req, res) => {
+    try {
+        const invitations = await invitationService.getAll();
+        return res.status(200).json({
+            success: true,
+            data: invitations
+        });
+    } catch (e) {
+        return res.status(400).json({
+            success: false,
+            error: e.message
+        });
+    }
+}
+
 exports.save = async (req, res) =>{
     try {
         const invitation = await invitationService.save(req.body)
@@ -14,6 +29,21 @@ exports.save = async (req, res) =>{
             message: 'error al crear invitacion',
             error: e.message
         })
+    }
+}
+
+exports.getAllCount = async (req, res) => {
+    try {
+        const invitations = await invitationService.getAllCount();
+        return res.status(200).json({
+            success: true,
+            data: invitations
+        });
+    } catch (e) {
+        return res.status(400).json({
+            success: false,
+            error: e.message
+        });
     }
 }
 
