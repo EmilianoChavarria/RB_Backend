@@ -9,6 +9,7 @@ const validate = (schema) => (req, res, next) => {
   next();
 };
 
+router.get('/', guestController.getAll);
 router.post('/', validate(guestsArraySchema), guestController.createGuests);
 router.put('/:id', validate(guestSchema), guestController.updateGuest);
 router.get('/:invitationId', guestController.getGuests);
