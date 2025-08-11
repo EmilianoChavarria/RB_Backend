@@ -26,6 +26,11 @@ const save = async (invitationData) => {
     return savedInvitation;
 };
 
+const getAllCount = async () => {
+    const count = await db('invitation').count('id_invitation as total').first();
+    return count.total;
+};
+
 const update = async (invitationData, id) => {
     // 1. Validación básica del ID y datos recibidos
     if (!id || isNaN(Number(id))) throw new Error('ID de invitación inválido');
@@ -113,4 +118,4 @@ const deleteInvitation = async (id) => {
 };
 
 
-module.exports = { save, findById, update, findByUser,deleteInvitation };
+module.exports = { save, findById, update, findByUser,deleteInvitation, getAllCount };

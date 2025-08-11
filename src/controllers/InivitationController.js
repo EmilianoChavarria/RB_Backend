@@ -17,6 +17,21 @@ exports.save = async (req, res) =>{
     }
 }
 
+exports.getAllCount = async (req, res) => {
+    try {
+        const invitations = await invitationService.getAllCount();
+        return res.status(200).json({
+            success: true,
+            data: invitations
+        });
+    } catch (e) {
+        return res.status(400).json({
+            success: false,
+            error: e.message
+        });
+    }
+}
+
 exports.findByUser = async (req, res) => {
     try {
         const invitations = await invitationService.findByUser(req.params.id);
