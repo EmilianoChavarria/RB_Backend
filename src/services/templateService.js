@@ -122,10 +122,15 @@ const updateTemplate = async (id, templateData) => {
         }
     }
 
+    const updatedRows = await db('templates')
+        .where({ id_templates: Number(id) })
+        .update(updateData);
+
+    if (!updatedRows) return [];
+
     return await db('templates')
-        .where({ id_templates: id })
-        .update(updateData)
-        .returning(['id_templates', 'template_name', 'mime_type', 'status', 'id_event_type']);
+        .where({ id_templates: Number(id) })
+        .select('id_templates', 'template_name', 'mime_type', 'status', 'id_event_type');
 };
 
 const deleteTemplate = async (id) => {
@@ -149,20 +154,20 @@ const getTemplateUsageByEventType = async () => {
 
 const getTemplatesCreatedByMonth = async (year = null) => {
     let query = db('templates')
-      .select(
-        db.raw('YEAR(created_at) as year'),
-        db.raw('MONTH(created_at) as month'),
-        db.raw('COUNT(id_templates) as count')
-      )
-      .groupByRaw('YEAR(created_at), MONTH(created_at)')
-      .orderByRaw('YEAR(created_at), MONTH(created_at)');
-  
+        .select(
+            db.raw('YEAR(created_at) as year'),
+            db.raw('MONTH(created_at) as month'),
+            db.raw('COUNT(id_templates) as count')
+        )
+        .groupByRaw('YEAR(created_at), MONTH(created_at)')
+        .orderByRaw('YEAR(created_at), MONTH(created_at)');
+
     if (year) {
-      query = query.whereRaw('YEAR(created_at) = ?', [year]);
+        query = query.whereRaw('YEAR(created_at) = ?', [year]);
     }
-  
+
     return await query;
-  };
+};
 
 module.exports = {
     getAllTemplates,
