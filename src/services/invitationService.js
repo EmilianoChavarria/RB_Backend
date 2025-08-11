@@ -1,5 +1,8 @@
 const db = require('../database/dbConnection');
 
+const getAll = async () => {
+    return await db('invitation').select('*');
+};
 
 const save = async (invitationData) => {
 
@@ -118,4 +121,4 @@ const deleteInvitation = async (id) => {
 };
 
 
-module.exports = { save, findById, update, findByUser,deleteInvitation, getAllCount };
+module.exports = { getAll, save, findById, update, findByUser,deleteInvitation, getAllCount };
