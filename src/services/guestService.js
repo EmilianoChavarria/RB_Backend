@@ -2,6 +2,10 @@ const { v4: uuidv4 } = require('uuid');
 const db = require('../database/dbConnection');
 const emailService = require('./emailService');
 
+const getAll = async () => {
+  return await db('guest').select('*');
+};
+
 const createGuests = async (guestsArray, invitationId) => {
   return await db.transaction(async trx => {
     const emails = guestsArray.map(g => g.email?.toLowerCase());
@@ -104,6 +108,7 @@ const findGuestsByEvent = async (idEvent) => {
 };
 
 module.exports = {
+  getAll,
   createGuests,
   getGuestsByInvitation,
   toggleGuestStatus,
