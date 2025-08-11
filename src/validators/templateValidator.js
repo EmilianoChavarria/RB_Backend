@@ -34,9 +34,16 @@ const updateTemplateSchema = Joi.object({
     Joi.string().regex(/^data:image\/(jpeg|png|gif);base64,/)
   ),
   mime_type: Joi.string().valid('image/jpeg', 'image/png', 'image/gif'),
-  status: Joi.number().integer().valid(0, 1)
-}).min(1).messages({
-  'object.min': 'Debe proporcionar al menos un campo para actualizar'
-});
+  status: Joi.number().integer().valid(0, 1).min(1).messages({
+    'object.min': 'Debe proporcionar al menos un campo para actualizar'
+  }),
+  id_event_type: Joi.number().integer().required().messages({
+    'number.base': 'El ID del tipo de evento debe ser un número entero',
+    'any.required': 'El ID del tipo de evento es requerido'
+  })
+
+})
+
+  ;
 
 module.exports = { templateSchema, updateTemplateSchema };
