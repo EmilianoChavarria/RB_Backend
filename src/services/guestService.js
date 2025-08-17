@@ -103,10 +103,24 @@ const findGuestsByEvent = async (idEvent) => {
   return guests;
 };
 
+const findByUuid = async (uuid)  => {
+  console.log(uuid)
+
+  const guest =await db('guest').where({uuid_guest:uuid}).first();
+
+  if (!guest){
+    throw new Error(`invitado con uuid ${uuid} no encontrado`)
+  }
+
+  return guest;
+
+}
+
 module.exports = {
   createGuests,
   getGuestsByInvitation,
   toggleGuestStatus,
   updateGuest,
-   findGuestsByEvent
+   findGuestsByEvent,
+  findByUuid
 };
