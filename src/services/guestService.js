@@ -1,10 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const db = require('../database/dbConnection');
-const emailService = require('./emailService');
-
-const getAll = async () => {
-  return await db('guest').select('*');
-};
+const {emailService} = require('./emailService');
 
 const createGuests = async (guestsArray, invitationId) => {
   return await db.transaction(async trx => {
@@ -18,6 +14,7 @@ const createGuests = async (guestsArray, invitationId) => {
     if (existingGuests.length > 0) {
       const existingEmails = existingGuests.map(g => g.email);
       throw new Error(`Los siguientes correos ya están registrados para esta invitación: ${existingEmails.join(', ')}`);
+
     }
 
     const guestsWithInvitation = guestsArray.map(guest => ({
@@ -39,6 +36,9 @@ const createGuests = async (guestsArray, invitationId) => {
     return { success: true };
   });
 };
+
+
+
 
 const getGuestsByInvitation = async (invitationId) => {
   return await db('guest')
@@ -83,35 +83,9 @@ const updateGuest = async (guestId, guestData) => {
     .update(guestData);
 };
 
-const findGuestsByEvent = async (idEvent) => {
-
-  if (typeof idEvent !== 'number' || isNaN(idEvent)) {
-    throw new Error('El idEvent debe ser un número válido');
-  }
-
-  // Validar que sea un entero positivo
-  if (!Number.isInteger(idEvent) || idEvent <= 0) {
-    throw new Error('El idEvent debe ser un entero positivo');
-  }
-
-
-  const event = await db('invitation').where({id_invitation: idEvent}).first();
-    if (!event){
-      throw new Error('El envento no existe');
-    }
-  const guests = await db('guest').where({invitation_id_invitation:idEvent});
-  if (guests.length<1){
-    throw new Error('No hay invitados asignados a este evento');
-  }
-
-  return guests;
-};
-
 module.exports = {
-  getAll,
   createGuests,
   getGuestsByInvitation,
   toggleGuestStatus,
-  updateGuest,
-   findGuestsByEvent
+  updateGuest
 };

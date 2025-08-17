@@ -18,7 +18,8 @@ const invitationSchema = Joi.object({
     user_id_user: Joi.number().integer().required().messages({
         'number.base': 'El ID del usuario debe ser un número entero',
         'any.required': 'El ID del usuario es requerido'
-    })
+    }),
+     customization_data: Joi.object().optional() // Añade esta línea
 });
 
 module.exports = { invitationSchema };
