@@ -1,6 +1,8 @@
 const { v4: uuidv4 } = require('uuid');
 const db = require('../database/dbConnection');
-const {emailService} = require('./emailService');
+const {emailService, sendRecoveryEmail} = require('./emailService');
+
+
 
 const getAll = async () => {
   return await db('guest').select('*');
@@ -18,6 +20,7 @@ const createGuests = async (guestsArray, invitationId) => {
     if (existingGuests.length > 0) {
       const existingEmails = existingGuests.map(g => g.email);
       throw new Error(`Los siguientes correos ya están registrados para esta invitación: ${existingEmails.join(', ')}`);
+
     }
 
     const guestsWithInvitation = guestsArray.map(guest => ({
@@ -127,5 +130,6 @@ module.exports = {
   toggleGuestStatus,
   updateGuest,
    findGuestsByEvent,
-  findByUuid
+  findByUuid,
+  updateGuest
 };

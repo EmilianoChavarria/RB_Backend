@@ -12,6 +12,8 @@ const passwordRecoveryRoutes = require('./routes/passwordRecoveryRoutes')
 const verifyToken = require('./middlewares/verifyToken')
 const verifyRole = require('./middlewares/verifyRole')
 const bodyParser = require('body-parser');
+const tempInvitationRoutes = require("./routes/tempInvitationRoutes");
+
 
 
 const app = express()
@@ -20,14 +22,9 @@ app.use(cors())
 app.use(express.json())
 
 // Configuración para manejar JSON y límites aumentados
-app.use(bodyParser.json({
-    limit: '10mb',
-    extended: true
-}));
-app.use(bodyParser.urlencoded({
-    limit: '10mb',
-    extended: true
-}));
+// Aumentar límite de JSON y URL-encoded
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 // Rutas
 app.use('/api/users', userRoutes);
@@ -37,7 +34,8 @@ app.use('/api/eventType', eventTypeRoutes)
 app.use('/api/guest', guestRoutes)
 app.use('/api/templates', templateRoutes);
 app.use('/api/confirm-invitation', confirmInvitationRoutes);
-app.use('/api/passwordRecovery', passwordRecoveryRoutes)
+app.use('/api/passwordRecovery', passwordRecoveryRoutes);
+app.use("/api/tempInvitation", tempInvitationRoutes);
 // Endpoint de prueba general con autenticación
 app.get('/api/prueba', verifyToken, (req, res) => {
     res.json({
