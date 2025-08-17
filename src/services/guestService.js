@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const db = require('../database/dbConnection');
-const emailService = require('./emailService');
+const {emailService} = require('./emailService');
 
 const createGuests = async (guestsArray, invitationId) => {
   return await db.transaction(async trx => {
