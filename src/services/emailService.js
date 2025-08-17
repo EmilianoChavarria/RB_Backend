@@ -112,7 +112,7 @@ class EmailService {
 }
 
     generateInvitationTemplate(guest, invitation) {
-      const url = `${process.env.FRONTEND_URL}/confirm-/${token}`;
+      const url = `${process.env.FRONTEND_URL}/confirm-invitation/${guest.uuid_guest}`;
         return `
 <!DOCTYPE html>
 <html>
