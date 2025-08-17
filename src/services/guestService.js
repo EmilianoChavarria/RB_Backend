@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const db = require('../database/dbConnection');
-const emailService = require('./emailService');
+const {emailService} = require('./emailService');
 
 const getAll = async () => {
   return await db('guest').select('*');
@@ -107,11 +107,25 @@ const findGuestsByEvent = async (idEvent) => {
   return guests;
 };
 
+const findByUuid = async (uuid)  => {
+  console.log(uuid)
+
+  const guest =await db('guest').where({uuid_guest:uuid}).first();
+
+  if (!guest){
+    throw new Error(`invitado con uuid ${uuid} no encontrado`)
+  }
+
+  return guest;
+
+}
+
 module.exports = {
   getAll,
   createGuests,
   getGuestsByInvitation,
   toggleGuestStatus,
   updateGuest,
-   findGuestsByEvent
+   findGuestsByEvent,
+  findByUuid
 };

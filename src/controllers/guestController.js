@@ -66,4 +66,24 @@ exports.findGuestsByEvent = async (req, res) => {
       error: e.message
     })
   }
+};
+
+exports.findByUuid = async  (req,res) =>{
+
+  try {
+    console.log(req.params.uuid_guest)
+    const guest = await guestService.findByUuid(req.params.uuid_guest)
+
+    res.json({
+      success:true,
+      data: guest
+    })
+  }catch (e) {
+    res.status(500).json({
+      success:false,
+      message:"error al consultar al invitado",
+      error:e.message
+    })
+  }
+
 }
