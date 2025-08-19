@@ -59,8 +59,35 @@ const updateConfirmation = async (confirmationData, uuid) => {
     return updated;
 };
 
+const findConfirmedGuestByEvent = async (id) => {
+    const eventId = Number(id);
+
+    if (isNaN(eventId)) {
+        throw new Error('El id del evento debe ser un número válido');
+    }
+
+    const event = await db('invitation')
+        .where({ id_invitation: eventId })
+        .first();
+
+    if (!event) {
+        throw new Error('El evento que quieres consultar no existe');
+    }
+
+    const result = await db('guest')
+        .join('confirmed_guests', 'guest.id_guest', 'confirmed_guests.guest_id_guest')
+        .where('guest.invitation_id_invitation', eventId)
+        .andWhere('confirmed_guests.response_status', 'confirmed')
+        .count('confirmed_guests.id_confirmed_guests as total');
+
+    return Number(result[0].total);
+};
+
+
+
 module.exports = {
     saveConfirmation,
     findOne,
-    updateConfirmation
+    updateConfirmation,
+    findConfirmedGuestByEvent
 };

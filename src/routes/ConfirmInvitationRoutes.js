@@ -12,5 +12,6 @@ const validate = (schema) => (req, res, next) => {
 router.post('/', validate(confirmInvitationValidator), confirmInvitationController.saveConfirmation);
 router.get('/:guestId', confirmInvitationController.findOne);
 router.put('/:guestUuid',validate(confirmInvitationValidatorUpdate) ,confirmInvitationController.updateConfirmation)
+router.get('/countConfirmedGuests/:event_id', confirmInvitationController.confirmedGuestsCountByEvent)
 
 module.exports = router;

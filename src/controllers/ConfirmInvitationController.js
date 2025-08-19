@@ -50,3 +50,25 @@ exports.updateConfirmation  = async (req,res)=>{
         });
     }
 }
+
+exports.confirmedGuestsCountByEvent = async (req,res)=>{
+    try{
+        const {event_id} = req.params
+        console.log(`adentro del controlador id ${event_id}`)
+        const count = await confirmInvitationService.findConfirmedGuestByEvent(event_id);
+
+        return res.json({
+            success:true,
+            data:count
+        })
+
+    }catch (e) {
+
+        return res.json({
+            success:false,
+            message:'error al consultar el conteo de invitados confirmados para el evento',
+            error:e.message
+        })
+
+    }
+}
